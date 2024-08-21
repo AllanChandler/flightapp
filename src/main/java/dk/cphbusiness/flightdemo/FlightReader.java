@@ -59,7 +59,7 @@ public class FlightReader {
 //    }
 
 //her benytter man sig af attributerne for at lave listen. Her er man fri for at instansier hvert objekt.
-    public List<DTOs.FlightInfo> getFlightInfoDetails(List<DTOs.FlightDTO> flightList) {
+s.FlightInfo> getFlightInfoDetails(List<DTOs.FlightDTO> flightList) {
         List<DTOs.FlightInfo> flightInfoList = flightList.stream().map(flight -> {
             Duration duration = Duration.between(flight.getDeparture().getScheduled(), flight.getArrival().getScheduled());
             DTOs.FlightInfo flightInfo = DTOs.FlightInfo.builder()
@@ -85,5 +85,4 @@ public class FlightReader {
         List<DTOs.FlightDTO> flightList = Arrays.stream(flights).toList();
         return flightList;
     }
-
 }
