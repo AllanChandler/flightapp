@@ -31,6 +31,29 @@ public class FlightReader {
             flightInfoList.forEach(f->{
                 System.out.println("\n"+f);
             });
+
+            double averageFlightTime = flightInfoList.stream()
+                    .filter(flight -> "Royal Jordanian".equals(flight.getAirline()))  // Direct comparison
+                    .mapToDouble(flight -> flight.getDuration().toMinutes())  // Directly map duration to minutes
+                    .average()
+                    .orElse(0.0);
+
+            System.out.println("\n"+"Gennemsnitlig flyvetid for Royal Jordanian: " + averageFlightTime + " minutter");
+
+
+            // Start med 0.0 minutter
+            double totalFlightTime = 0.0;
+
+            // Beregn den samlede flyvetid for Royal Jordanian
+            for (DTOs.FlightInfo flight : flightInfoList) {
+                if ("Royal Jordanian".equals(flight.getAirline())) {  // Tjek for Royal Jordanian
+                    totalFlightTime += flight.getDuration().toMinutes();  // Tilføj varighed i minutter
+                }
+            }
+
+            // Udskriv den samlede flyvetid
+            System.out.println("\n"+"Samlet flyvetid for Royal Jordanian: " + totalFlightTime + " minutter");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
