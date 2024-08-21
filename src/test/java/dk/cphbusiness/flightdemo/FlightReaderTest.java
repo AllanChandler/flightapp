@@ -14,9 +14,6 @@ class FlightReaderTest {
     FlightReader reader = new FlightReader();
     FlightWriter writer = new FlightWriter();
 
-    /* // slettede empty bodies fordi de ikke bliver brugt og bruger unødvendig plads,
-     tænker det kan være en improvement
-
     @BeforeEach
     void setUp() {
     }
@@ -25,11 +22,8 @@ class FlightReaderTest {
     void tearDown() {
     }
 
-
-     */
 //    @Test // This test requires an API key and a free account only has 100 requests per month, so run this test with caution.
-    @DisplayName("Test if url writer method works") // tester om sizen er forventet om at blive 10 hvis ikke
-    // fås der fejl og testen fejler
+    @DisplayName("Test if url writer method works")
     void reader() {
         try {
             List<DTOs.FlightDTO> flightList = writer.writeFlightsToFile(1, 10);
@@ -41,8 +35,7 @@ class FlightReaderTest {
 
 
     @Test
-    @DisplayName("Test getting stream info from collection") // tester om filen flights.json får de rette detaljer
-    // så man tester index 0 og ser om man får den forventede navn af flyet som bliver kaldt airline
+    @DisplayName("Test getting stream info from collection")
     void getInfo() {
         try {
             List<DTOs.FlightDTO> flights = reader.getFlightsFromFile("flights.json");
