@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Purpose:
@@ -25,15 +26,30 @@ public class FlightReader {
 
     public static void main(String[] args) {
         FlightReader flightReader = new FlightReader();
+        List<DTOs.FlightInfo> flightInfoList = new ArrayList<>();
         try {
             List<DTOs.FlightDTO> flightList = flightReader.getFlightsFromFile("flights.json");
-            List<DTOs.FlightInfo> flightInfoList = flightReader.getFlightInfoDetails(flightList);
+            flightInfoList = flightReader.getFlightInfoDetails(flightList);
             flightInfoList.forEach(f->{
                 System.out.println("\n"+f);
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //calculate the total flight time
+        String airlineName = "StarFlyer";
+
+        List<Duration> durations = flightInfoList.stream()
+                .filter(flightInfo -> airlineName.equals(flightInfo.getAirline()))
+                .map(DTOs.FlightInfo::getDuration)
+                .collect(Collectors.toList());
+
+        Double sumDuration = durations.stream()
+                .mapToDouble(Duration::toMinutes)
+                .sum();
+
+        System.out.println(airlineName + " - Total duration in minutes: " + sumDuration);
     }
 
 
